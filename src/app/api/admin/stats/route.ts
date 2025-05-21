@@ -3,9 +3,9 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "../../auth/[...nextauth]/route";
 import connectDB from "@/lib/mongodb";
 import User from "@/models/User";
-// Import your Post and Category models here when created
 
-export async function GET(req: Request) {
+// Remove the unused req parameter
+export async function GET() {
   try {
     const session = await getServerSession(authOptions);
 

@@ -1,25 +1,65 @@
-import React, { InputHTMLAttributes, ForwardedRef } from 'react';
+import "next-auth";
+// Remove the unused import or use it
+// import { JWT as NextAuthJWT } from "next-auth/jwt";
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  label?: string;
+declare module "next-auth" {
+  /**
+   * Extends the built-in session types
+   */
+  interface Session {
+    user: {
+      id: string;
+      name: string;
+      email: string;
+      role: string;
+    };
+  }
+  
+  interface User {
+    id: string;
+    name: string;
+    email: string;
+    role: string;
+  }
 }
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ label, type = 'text', ...props }, ref) => {
+declare module "next-auth/jwt" {
+  interface JWT {
+    id: string;
+    role: string;
+  }
+}import React, { forwardRef, type ComponentPropsWithoutRef } from 'react';
+
+// Define your input props
+interface InputProps extends ComponentPropsWithoutRef<"input"> {
+  label?: string;
+  error?: string;
+}
+
+const Input = forwardRef<HTMLInputElement, InputProps>(
+  ({ label, error, ...props }, ref) => {
     return (
       <div className="mb-4">
-        {label && <label className="block text-sm font-medium text-gray-700">{label}</label>}
+        {label && (
+          <label className="block text-gray-700 mb-2" htmlFor={props.id}>
+            {label}
+          </label>
+        )}
         <input
           ref={ref}
-          type={type}
-          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-500 focus:ring-opacity-50"
+          className={`w-full p-2 border ${
+            error ? "border-red-500" : "border-gray-300"
+          } rounded`}
           {...props}
         />
+        {error && (
+          <p className="text-red-500 text-xs mt-1">{error}</p>
+        )}
       </div>
     );
   }
 );
 
-Input.displayName = 'Input';
+Input.displayName = "Input";
 
 export default Input;

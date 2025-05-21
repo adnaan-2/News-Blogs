@@ -39,8 +39,10 @@ export async function POST(request: Request) {
       role: 'user' // Default role
     });
     
-    // Return success but don't include password
-    const { password: _, ...userWithoutPassword } = newUser.toObject();
+    // Return success but don't include password - fix unused variable
+    const userWithoutPassword = { ...newUser.toObject() };
+    delete userWithoutPassword.password;
+    
     return NextResponse.json(
       { message: "User created successfully", user: userWithoutPassword },
       { status: 201 }

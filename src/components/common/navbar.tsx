@@ -1,10 +1,17 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 const Navbar = () => {
     return (
         <nav className="flex justify-between items-center p-4 bg-gray-800 text-white">
             <div className="flex items-center">
-                <img src="/logo.svg" alt="Logo" className="h-8 w-8 mr-2" />
+                <Image 
+                  src="/logo.svg" 
+                  alt="Logo" 
+                  width={32} 
+                  height={32} 
+                  className="h-8 w-auto"
+                />
                 <span className="text-xl font-bold">News Blog</span>
             </div>
             <div className="flex space-x-4">

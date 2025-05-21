@@ -1,6 +1,6 @@
-import NextAuth, { DefaultSession } from "next-auth"
 import "next-auth";
-import { JWT } from "next-auth/jwt";
+// Remove the unused import or use it
+// import { JWT as NextAuthJWT } from "next-auth/jwt";
 
 declare module "next-auth" {
   /**
